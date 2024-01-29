@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, useEffect } from "react";
-import { getPostsRequests } from "../api/posts";
+import { getPostsRequests, createPostRequest } from "../api/posts";
 
 const PostContext = createContext();
 export const usePosts = () => {
@@ -14,6 +14,10 @@ export const PostProvider = ({ children }) => {
     setPosts(res.data);
     console.log(res);
   };
+  const createPost = async (post) => {
+    const res = await createPostRequest(post);
+    setPosts([...posts, res.data]);
+  };
   useEffect(() => {
     getPosts();
   }, []);
@@ -23,6 +27,7 @@ export const PostProvider = ({ children }) => {
         value={{
           posts,
           getPosts,
+          createPost,
         }}
       >
         {children}
