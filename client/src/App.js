@@ -2,6 +2,7 @@ import "./App.css";
 import { PostProvider } from "./context/PostContext";
 import { HomePage, PostForm, NotFoundPage } from "./pages/index";
 import { Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/new" element={<PostForm />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          <Toaster />
         </PostProvider>
       </div>
     </div>
