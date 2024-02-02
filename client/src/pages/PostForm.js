@@ -5,7 +5,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export function PostForm() {
-  const { createPost, getPost } = usePosts();
+  const { createPost, getPost, updatePost } = usePosts();
   const navigate = useNavigate();
   const params = useParams();
   const [post, setPost] = useState({
@@ -20,7 +20,7 @@ export function PostForm() {
         setPost(post);
       }
     })();
-  }, []);
+  }, [params.id]);
   return (
     <div className="flex items-center justify-center">
       <div className="bg-zinc-800 p-10 shadow-md shadow-black">
@@ -37,7 +37,11 @@ export function PostForm() {
             description: Yup.string().required("Description is required"),
           })}
           onSubmit={async (values, actions) => {
-            await createPost(values);
+            if (params.id) {
+              await updatePost(params.id, values);
+            } else {
+              await createPost(values);
+            }
             navigate("/");
           }}
           enableReinitialize
